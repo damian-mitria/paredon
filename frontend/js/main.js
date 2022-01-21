@@ -28,26 +28,27 @@ $(function(){
         let day = d.getDate();
         let fecha = (day<10 ? '0' : '') + day + '/' + (month<10 ? '0' : '') + month + '/' + d.getFullYear();
 
-        $("#mensaje").empty();
+        $("#mensaje-nombre").empty();
+        $("#mensaje-texto").empty();
         $("#nombre, #texto").removeClass("error");
 
         if(nombre===""){
             $("#nombre").addClass("error");
-            $("#mensaje").append("<p>El nombre es obligatorio</p>");
+            $("#mensaje-nombre").append("<p>El nombre es obligatorio</p>");
         }
 
-        if(texto==""){
+        if(texto===""){
             $("#texto").addClass("error");
-            $("#mensaje").append("<p>El texto es obligatorio</p>");
+            $("#mensaje-texto").append("<p>El texto es obligatorio</p>");
             if(nombre.length >=12){
-                $("#mensaje").append("<p>El nombre no puede tener más de 11 caracteres</p>");
+                $("#mensaje-nombre").append("<p>El nombre no puede tener más de 11 caracteres</p>");
                 $("#nombre").addClass("error");
             }
         }
 
         if(nombre!=="" && texto!==""){
             if(nombre.length >=12){
-                $("#mensaje").append("<p>El nombre no puede tener mas de 11 caracteres</p>");
+                $("#mensaje-nombre").append("<p>El nombre no puede tener mas de 11 caracteres</p>");
                 $("#nombre").addClass("error");
        
             }else{

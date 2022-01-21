@@ -50,7 +50,11 @@ h1{
     border: none!important;
 }
 
-#mensaje{
+#mensaje-nombre{
+    color: red;
+}
+
+#mensaje-texto{
     color: red;
 }
 

@@ -28,16 +28,23 @@
   <main>
     <section class="datos">
       <form action="#" method="get" id="formulario">
-        <input class="nombre container-fluid" type="text" name="nombre" id="nombre" placeholder="Ingrese nombre">
-        <textarea class="texto container-fluid" name="texto" id="texto" cols="30" rows="10" placeholder="Ingrese texto"></textarea>
+        <div>
+          <input class="nombre container-fluid" type="text" name="nombre" id="nombre" placeholder="Ingrese nombre">
+          <div id="mensaje-nombre" class="container-fluid"></div>
+        </div>
+        <div>
+          <textarea class="texto container-fluid" name="texto" id="texto" cols="30" rows="10" placeholder="Ingrese texto"></textarea>
+          <div id="mensaje-texto" class="container-fluid"></div>
+        </div>
+        
         <button type="button" class="btn btn-primary container-fluid" id="boton-enviar">Enviar</button>
       </form>
     </section>
 
-    <section>
+    <!--<section>
         <div id="mensaje" class="container-fluid">
         </div>
-    </section>
+    </section>-->
 
     <div class="text-center mt-3 text-info" id="spinner">
       <div class="spinner-border" role="status">
