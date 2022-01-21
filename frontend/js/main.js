@@ -1,4 +1,4 @@
-import {saveTask, getTasks} from '../firebase.js'
+import {saveTask, getTasks} from './firebase.js'
 
 $(async() => {
     const querySnapShots = await getTasks();
