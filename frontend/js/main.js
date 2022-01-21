@@ -40,7 +40,7 @@ $(function(){
             $("#texto").addClass("error");
             $("#mensaje").append("<p>El texto es obligatorio</p>");
             if(nombre.length >=12){
-                $("#mensaje").append("<p>El nombre no puede tener mas de 11 caracteres</p>");
+                $("#mensaje").append("<p>El nombre no puede tener más de 11 caracteres</p>");
                 $("#nombre").addClass("error");
             }
         }
