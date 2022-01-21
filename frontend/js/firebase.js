@@ -22,5 +22,4 @@
 export const saveTask = (nombre, texto, fecha) => 
   addDoc(collection(db,'tasks'), { nombre, texto, fecha });
 
-
 export const getTasks = () => getDocs(collection(db,'tasks'));

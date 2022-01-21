@@ -71,7 +71,6 @@ h1{
 
 .ladrillo{
     background: linear-gradient(135deg,#CB4154,#e06677)!important;
-    /*background-color: #CB4154 ;*/
     margin: .5em .2em;
     display: flex;
     flex-wrap: wrap;
@@ -104,76 +103,3 @@ h1{
     display: inline;
     margin: 0em .5em;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.hover{
-    background-color: rgb(194, 233, 156);
-    transform: scale(1.5);
-    transition: 1s;
-}
-
-#p1{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-#p2{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-#p3{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-#p4{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-#p5{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-#p6{
-    background-color: #9c9c9c;
-    width: 100%;
-    box-sizing: content-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-*/
