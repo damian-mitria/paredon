@@ -2,6 +2,7 @@ import {saveTask, getTasks} from './firebase.js'
 
 $(async() => {
     const querySnapShots = await getTasks();
+    $("#spinner").hide();
     querySnapShots.forEach(doc => {
         let objeto = doc.data();
         $(`<div class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p></div>`)
