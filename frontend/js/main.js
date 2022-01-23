@@ -60,7 +60,7 @@ $(function(){
                     $("#divFecha").text(fecha);  
                 });
                 $(".contenido-texto").hide();
-                saveTask(nombre, texto, fecha); //guardo todos los datos para el firebase
+                saveTask(nombre, texto, fecha, d); //guardo todos los datos para el firebase
                
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
