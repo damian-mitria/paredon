@@ -17,8 +17,7 @@ $(async() => {
         $(".contenido-texto").hide();
     });
     
-    let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
-    $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
+    contarLadrillos();
 
 });
 
@@ -72,9 +71,7 @@ $(function(){
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
 
-                let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
-                $("#contadorDeLadrillos").empty();
-                $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
+                contarLadrillos();
                 }  
         }
     });
@@ -82,3 +79,9 @@ $(function(){
 
    
 });
+
+function contarLadrillos(){
+    let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
+    $("#contadorDeLadrillos").empty();
+    $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
+}
