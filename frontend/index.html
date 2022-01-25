@@ -16,16 +16,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Wallpoet&display=swap" rel="stylesheet">
   
-  <title>El mural del Damián</title>
+  <title>Tu Paredón</title>
 
 </head>
 <body>
   <header>
-    <h1>El mural del Damián</h1>
+    <h1>Tu Paredón</h1>
     <h4 class="slogan">Escribe tu texto para inmortalizarlo</h4>
   </header>
 
   <main>
+    <!-- formulario -->
     <section class="datos">
       <form action="#" method="get" id="formulario">
         <div>
@@ -40,19 +41,22 @@
         <button type="button" class="btn btn-primary container-fluid" id="boton-enviar">Enviar</button>
       </form>
     </section>
-
-    <!--<section>
-        <div id="mensaje" class="container-fluid">
-        </div>
-    </section>-->
-
-    <div class="text-center mt-3 text-info" id="spinner">
-      <div class="spinner-border" role="status">
-      </div>
+   
+ <!-- spinner y contador de ladrillo -->
+<section>
+  <div class="text-center mt-3 text-info" id="spinner">
+    <div class="spinner-border" role="status">
     </div>
-  
+  </div>
+
+  <div class="text-center mt-3" id="contadorDeLadrillos"> 
+  </div>
+</section>
+    
+<!-- pared -->
     <section class="pared" id="pared">
     </section>
+
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">

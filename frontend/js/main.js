@@ -1,5 +1,7 @@
 import {saveTask, getTasks} from './firebase.js'
 
+
+
 $(async() => {
     const querySnapShots = await getTasks();
     $("#spinner").hide();
@@ -15,9 +17,14 @@ $(async() => {
         $(".contenido-texto").hide();
     });
     
+    let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
+    $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
+
 });
 
 $(function(){
+
+    
 
     $("#boton-enviar").on('click', function(){
         /*obtengo datos del html*/
@@ -64,7 +71,14 @@ $(function(){
                
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
+
+                let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
+                $("#contadorDeLadrillos").empty();
+                $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
                 }  
         }
     });
+
+
+   
 });
