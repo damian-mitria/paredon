@@ -12,6 +12,10 @@ h1{
     text-align: center;
 }
 
+.font{
+    font-family: 'Wallpoet', cursive;
+}
+
 .copy{
     margin-top: 1em;
 }
@@ -106,4 +110,8 @@ h1{
     box-sizing: content-box;
     display: inline;
     margin: 0em .5em;
+}
+
+.marquesina{
+    height: 60px;
 }
