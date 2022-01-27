@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
@@ -117,13 +117,45 @@ onAuthStateChanged(auth, (user) => {
     const uid = user.uid;
     // ...
     console.log("atroden");
-    $("#main").show();
-    $("#mensaje-footer").hide();
+    $("#mensajeLogueado").empty();
+    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!</p>");
+     $("#mensajeLogueado").show();
   } else {
     // User is signed out
     // ...
     console.log("aqui no ha entrado nadie hermanote");
-    $("#mensaje-footer").show();
-    $("#main").hide();
+    $("#mensajeLogueado").hide();
   }
 });
+
+const provider = new GoogleAuthProvider();
+
+const googleLogin = document.querySelector("#googleLogin");
+googleLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // ...
+    alert("Usted se ha logueado correctamente");
+    singInForm.reset();
+    $('#singinModal').modal('hide');
+    console.log("aaaqui estoyyyy"); // esto no aparece 26/01/2022 11.25pm
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+    alert(errorMessage);
+  });
+
+});
+

@@ -51,55 +51,9 @@
       </div>
     </nav>
 
-    <!-- Modal del navBar SING UP-->
-    <div class="modal fade" id="singupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="singup-form">
-              <div class="form-group">
-                <input type="text" id="singup-email" class="form-control mb-3" placeholder="E-Mail" required>
-              </div>
-              <div class="form-group">
-                <input type="password" id="singup-password" class="form-control mb-3" placeholder="Password" required>
-              </div>
-              <button type="submit" class="btn btn-success">Registrarse</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal del navBar SING IN-->
-    <div class="modal fade" id="singinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Loguearse</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="login-form">
-              <div class="form-group">
-                <input type="text" id="login-email" class="form-control mb-3" placeholder="E-Mail" required>
-              </div>
-              <div class="form-group">
-                <input type="password" id="login-password" class="form-control mb-3" placeholder="Password" required>
-              </div>
-              <button type="submit" class="btn btn-success">Loguearse</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </header>
 
-  <main id="main">
+  <main>
 
     <h1>Tu Paredón</h1>
     <h4 class="slogan">Escribe tu texto para inmortalizarlo</h4>
@@ -121,7 +75,7 @@
       </form>
     </section>
 
-    <!-- spinner y contador de ladrillo -->
+    <!-- spinner, contador de ladrillo y mensaje por estar logueado-->
     <section>
       <div class="text-center mt-3 text-info" id="spinner">
         <div class="spinner-border" role="status">
@@ -130,6 +84,10 @@
 
       <div class="text-center mt-3" id="contadorDeLadrillos">
       </div>
+
+      <div class="text-center mt-3" id="mensajeLogueado">
+      </div>
+
     </section>
 
     <!-- pared -->
@@ -157,12 +115,58 @@
       </div>
     </div>
 
+    <!-- Modal del navBar REGISTRARSE-->
+    <div class="modal fade" id="singupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="singup-form">
+              <div class="form-group">
+                <input type="text" id="singup-email" class="form-control mb-3" placeholder="E-Mail" required>
+              </div>
+              <div class="form-group">
+                <input type="password" id="singup-password" class="form-control mb-3" placeholder="Password" required>
+              </div>
+              <button type="submit" class="btn btn-success">Registrarse</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal del navBar LOGUEARSE-->
+    <div class="modal fade" id="singinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Loguearse</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="login-form">
+              <div class="form-group">
+                <input type="text" id="login-email" class="form-control mb-3" placeholder="E-Mail" required>
+              </div>
+              <div class="form-group">
+                <input type="password" id="login-password" class="form-control mb-3" placeholder="Password" required>
+              </div>
+              <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-block">Loguearse</button>
+              <button type="button" class="btn btn-info btn-block" id="googleLogin">Loguearse con Google</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer>
-    <div class="container-fluid" id="mensaje-footer">
-      <marquee class="m-5 display-5 marquesina" behavior="alternate"> Logueate para disfrutar de la pagina</marquee>
-    </div>
     <p class="copy">Damian® Copyright ©</p>
   </footer>
 
