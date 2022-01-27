@@ -46,7 +46,7 @@ singupForm.addEventListener('submit', (e) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      
+
       set(ref(database, 'users/' + user.uid), {   //<----seteo al usuario en la base de datos
         email: email,
         password: password
@@ -102,8 +102,8 @@ logout.addEventListener('click', (e) => {
     alert("Deslogueado. Gracias... vuelva pronto!")
   }).catch((error) => {
     const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage);
+    const errorMessage = error.message;
+    alert(errorMessage);
   });
 
 });
@@ -118,8 +118,8 @@ onAuthStateChanged(auth, (user) => {
     // ...
     console.log("atroden");
     $("#mensajeLogueado").empty();
-    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!</p>");
-     $("#mensajeLogueado").show();
+    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!(no operativo aun)</p>");
+    $("#mensajeLogueado").show();
   } else {
     // User is signed out
     // ...
@@ -134,28 +134,27 @@ const googleLogin = document.querySelector("#googleLogin");
 googleLogin.addEventListener('click', (e) => {
   e.preventDefault();
   signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // ...
-    alert("Usted se ha logueado correctamente");
-    singInForm.reset();
-    $('#singinModal').modal('hide');
-    console.log("aaaqui estoyyyy"); // esto no aparece 26/01/2022 11.25pm
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-    alert(errorMessage);
-  });
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+      alert("Usted se ha logueado correctamente con Google");
+      singInForm.reset();
+      $('#singinModal').modal('hide');
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      alert(errorMessage);
+    });
 
 });
 
