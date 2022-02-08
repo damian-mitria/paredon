@@ -2,9 +2,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -24,15 +25,30 @@ const db = getFirestore();
 // Get a reference to the database service
 const database = getDatabase(app);
 
-export const saveTask = (nombre, texto, fecha, d) =>
-  addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d });
+export async function saveTask(nombre, texto, fecha, d, contadorMeGusta) {
+ let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta });
+ 
+  return objeto.id;
+  
+}
 
 export const getTasks = () => getDocs(query(collection(db, 'tasks'), orderBy("d")));
 
 
+// Parte del boton me gusta
 
-const auth = getAuth(); // esto me sirve para todo lo que es logueo y registrarse
+export async function saveMeGusta(id) {
 
+  const docRef = doc(db, "tasks", id);
+  const docSnap = await getDoc(docRef);
+  let objeto = docSnap.data();
+  updateDoc(docRef, { contadorMeGusta: ++objeto.contadorMeGusta });
+  //console.log(objeto.contadorMeGusta)
+  return objeto.contadorMeGusta;
+}
+  
+// esto me sirve para todo lo que es logueo y registrarse
+const auth = getAuth(); 
 
 // Registrarse
 const singupForm = document.querySelector("#singup-form");
@@ -123,7 +139,7 @@ onAuthStateChanged(auth, (user) => {
   } else {
     // User is signed out
     // ...
-    console.log("aqui no ha entrado nadie hermanote");
+    //console.log("aqui no ha entrado nadie hermanote");
     $("#mensajeLogueado").hide();
   }
 });
