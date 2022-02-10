@@ -137,7 +137,7 @@ onAuthStateChanged(auth, (user) => {
     // ...
     console.log("estas logueado");
     $("#mensajeLogueado").empty();
-    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!</p>");
+    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle ME GUSTA a los mensajes!!!</p>");
     $("#mensajeLogueado").show();
     for (let actual of mySetDeIds) { // muestro los stickers de los me gusta si esta logueado
       $(`#${actual}`).children(".sticker").show();
@@ -148,10 +148,13 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
     // ...
     console.log("no estas logueado");
-    $("#mensajeLogueado").hide();
-    for (let actual of mySetDeIds) { // oculto los stickers de los me gusta al logout
+    $("#mensajeLogueado").empty();
+    $("#mensajeLogueado").append("<p class='text-primary'>Solo los usuarios logueador puede darle ME GUSTA a los mensajes!!!</p>");
+    $("#mensajeLogueado").show();
+    /*for (let actual of mySetDeIds) { // oculto los stickers de los me gusta al logout
       $(`#${actual}`).children(".sticker").hide();
     }
+    */
     $("#boton-meGusta").hide();
   }
 });

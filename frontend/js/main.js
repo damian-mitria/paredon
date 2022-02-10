@@ -19,9 +19,9 @@ $(async () => {
         $(".contenido-texto").hide();
         $("#divId").hide();
         mySetDeIds.add(doc.id);
-        if (auth){
+        if (!auth){
         } else{
-            ocultarStickerMeGusta();
+           // ocultarStickerMeGusta();
             ocultaBotonMeGusta();
         }   
     });
@@ -80,10 +80,11 @@ $(function () {
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
                 mySetDeIds.add(id); // agrego id al set
-                if (auth){
-                } else{
-                    ocultarStickerMeGusta()
+                if (!auth){
                     ocultaBotonMeGusta()
+                } else{
+                   // ocultarStickerMeGusta()
+                   
                 } 
                 contarLadrillos();  
             }
