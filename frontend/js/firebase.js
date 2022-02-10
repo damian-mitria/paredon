@@ -1,11 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import mySetDeIds from "./main.js"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,10 +27,10 @@ const db = getFirestore();
 const database = getDatabase(app);
 
 export async function saveTask(nombre, texto, fecha, d, contadorMeGusta) {
- let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta });
- 
+  let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta });
+
   return objeto.id;
-  
+
 }
 
 export const getTasks = () => getDocs(query(collection(db, 'tasks'), orderBy("d")));
@@ -46,9 +47,11 @@ export async function saveMeGusta(id) {
   //console.log(objeto.contadorMeGusta)
   return objeto.contadorMeGusta;
 }
-  
+
 // esto me sirve para todo lo que es logueo y registrarse
-const auth = getAuth(); 
+const auth = getAuth();
+export {auth}; // lo exporto para saber si esta logueado en el main.js
+
 
 // Registrarse
 const singupForm = document.querySelector("#singup-form");
@@ -62,12 +65,12 @@ singupForm.addEventListener('submit', (e) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-
+    
       set(ref(database, 'users/' + user.uid), {   //<----seteo al usuario en la base de datos
         email: email,
         password: password
       });
-      alert("Usuario registrado correctamente!");
+      alert("Usuario registrado correctamente y ya esta logueado!");
       singupForm.reset();
       $('#singupModal').modal('hide');
     })
@@ -132,15 +135,24 @@ onAuthStateChanged(auth, (user) => {
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
     // ...
-    console.log("atroden");
+    console.log("estas logueado");
     $("#mensajeLogueado").empty();
-    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!(no operativo aun)</p>");
+    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle like a los mensajes!!!</p>");
     $("#mensajeLogueado").show();
+    for (let actual of mySetDeIds) { // muestro los stickers de los me gusta si esta logueado
+      $(`#${actual}`).children(".sticker").show();
+    }
+    $("#boton-meGusta").show();
+
   } else {
     // User is signed out
     // ...
-    //console.log("aqui no ha entrado nadie hermanote");
+    console.log("no estas logueado");
     $("#mensajeLogueado").hide();
+    for (let actual of mySetDeIds) { // oculto los stickers de los me gusta al logout
+      $(`#${actual}`).children(".sticker").hide();
+    }
+    $("#boton-meGusta").hide();
   }
 });
 
@@ -173,4 +185,23 @@ googleLogin.addEventListener('click', (e) => {
     });
 
 });
+
+// Persistencia de logueo, cuando cerras la pestaña o ventana te desloguea
+setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    // New sign-in will be persisted with session persistence.
+  console.log("estas aca")
+    return signInWithEmailAndPassword(auth, email, password);
+  
+  })
+  .catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage)
+  });
 

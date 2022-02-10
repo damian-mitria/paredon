@@ -1,7 +1,9 @@
-import { saveTask, getTasks, saveMeGusta } from './firebase.js'
+import { saveTask, getTasks, saveMeGusta, auth } from './firebase.js'
+
+const mySetDeIds = new Set();
 
 $(async () => {
-
+    
     const querySnapShots = await getTasks();
     $("#spinner").hide();
     querySnapShots.forEach(doc => {
@@ -12,12 +14,17 @@ $(async () => {
                 $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
                 $("#divMensaje").text($(event.currentTarget).children(".contenido-texto").get(0).innerHTML);
                 $("#divFecha").text(objeto.fecha);
-                $("#divId").text(doc.id);
+                $("#divId").text(doc.id);    
             });
         $(".contenido-texto").hide();
         $("#divId").hide();
+        mySetDeIds.add(doc.id);
+        if (auth){
+        } else{
+            ocultarStickerMeGusta();
+            ocultaBotonMeGusta();
+        }   
     });
-
     contarLadrillos();
 
 });
@@ -67,31 +74,33 @@ $(function () {
                         $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
                         $("#divMensaje").text($(event.currentTarget).children(".contenido-texto").get(0).innerHTML);
                         $("#divFecha").text(fecha); 
-                        $("#divId").text(id);                 
+                        $("#divId").text(id);          
                     });
                 $(".contenido-texto").hide();
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
-                
-                contarLadrillos();
+                mySetDeIds.add(id); // agrego id al set
+                if (auth){
+                } else{
+                    ocultarStickerMeGusta()
+                    ocultaBotonMeGusta()
+                } 
+                contarLadrillos();  
             }
         }
     });
 
     $("#boton-meGusta").on('click', async function (event) {
-        var id = $(event.currentTarget).children("#divId").get(0).innerHTML;
-       //console.log(id);
-       //console.log($("#divId").val());
+        var id = $(event.currentTarget).children("#divId").get(0).innerHTML; // obtengo el id de cada ladrillo
+        //console.log(id);
+        //console.log($("#divId").val());
         let contador = await saveMeGusta(id);
-        console.log(`#${id}`);
-        console.log($(`#${id}`).children(".sticker").get(0));
-        $(`#${id}`).children(".sticker").get(0)
-        $(`#${id}`).children(".sticker").get(0).innerHTML = contador;
+        //console.log(`#${id}`);
+        //console.log($(`#${id}`).children(".sticker").get(0));
+        //$(`#${id}`).children(".sticker").get(0)
+        $(`#${id}`).children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
 
     });
-
-   
-  
 
     /*const singupForm = document.querySelector("#singup-form");
     singupForm.addEventListener('submit', (e) =>{
@@ -104,6 +113,22 @@ $(function () {
         console.log(email,password);
     });*/
 
+    
+    $("#boton-meGusta").on('click', async function (event) {
+        var id = $(event.currentTarget).children("#divId").get(0).innerHTML; // obtengo el id de cada ladrillo
+        //console.log(id);
+        //console.log($("#divId").val());
+        let contador = await saveMeGusta(id);
+        //console.log(`${id}`);
+        //console.log($(`#${id}`).children(".sticker").get(0));
+        //$(`#${id}`).children(".sticker").get(0)
+        $(`#${id}`).children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
+
+    });
+
+
+
+
 });
 
 function contarLadrillos() {
@@ -112,3 +137,21 @@ function contarLadrillos() {
     $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
 }
 
+function ocultarStickerMeGusta() {
+    for (let actual of mySetDeIds){ // oculto los stickers de los me gusta
+        $(`#${actual}`).children(".sticker").hide();
+    }
+}
+
+function ocultaBotonMeGusta() {
+    for (let actual of mySetDeIds){ // oculto los stickers de los me gusta
+        if($(actual === $("#divId").val())){
+            $("#boton-meGusta").hide();
+            //console.log("aca estoy")
+        };
+    }
+}
+
+
+
+export default mySetDeIds; 
