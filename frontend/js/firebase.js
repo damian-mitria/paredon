@@ -26,9 +26,9 @@ const db = getFirestore();
 // Get a reference to the database service
 const database = getDatabase(app);
 
-export async function saveTask(nombre, texto, fecha, d, contadorMeGusta) {
-  let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta });
-
+export async function saveTask(nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta) {
+  
+  let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta });
   return objeto.id;
 
 }
@@ -46,6 +46,16 @@ export async function saveMeGusta(id) {
   updateDoc(docRef, { contadorMeGusta: ++objeto.contadorMeGusta });
   //console.log(objeto.contadorMeGusta)
   return objeto.contadorMeGusta;
+}
+
+export async function saveNOMeGusta(id) {
+
+  const docRef = doc(db, "tasks", id);
+  const docSnap = await getDoc(docRef);
+  let objeto = docSnap.data();
+  updateDoc(docRef, { contadorNOMeGusta: ++objeto.contadorNOMeGusta });
+  //console.log(objeto.contadorMeGusta)
+  return objeto.contadorNOMeGusta;
 }
 
 // esto me sirve para todo lo que es logueo y registrarse
@@ -137,25 +147,28 @@ onAuthStateChanged(auth, (user) => {
     // ...
     console.log("estas logueado");
     $("#mensajeLogueado").empty();
-    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle ME GUSTA a los mensajes!!!</p>");
+    $("#mensajeLogueado").append("<p class='text-primary'>Por estar logueado usted puede darle ME GUSTA o NO ME GUSTA a los mensajes!!!</p>");
     $("#mensajeLogueado").show();
     for (let actual of mySetDeIds) { // muestro los stickers de los me gusta si esta logueado
       $(`#${actual}`).children(".sticker").show();
+      $(`#${actual}`).children(".sticker2").show();
     }
     $("#boton-meGusta").show();
+    $("#boton-NoMeGusta").show();
 
   } else {
     // User is signed out
     // ...
     console.log("no estas logueado");
     $("#mensajeLogueado").empty();
-    $("#mensajeLogueado").append("<p class='text-primary'>Solo los usuarios logueador puede darle ME GUSTA a los mensajes!!!</p>");
+    $("#mensajeLogueado").append("<p class='text-primary'>Solamente los usuarios logueados pueden darle ME GUSTA o NO ME GUSTA a los mensajes!!!</p>");
     $("#mensajeLogueado").show();
     /*for (let actual of mySetDeIds) { // oculto los stickers de los me gusta al logout
       $(`#${actual}`).children(".sticker").hide();
     }
     */
     $("#boton-meGusta").hide();
+    $("#boton-NoMeGusta").hide();
   }
 });
 

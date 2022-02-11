@@ -1,29 +1,32 @@
-import { saveTask, getTasks, saveMeGusta, auth } from './firebase.js'
+import { saveTask, getTasks, saveMeGusta, saveNOMeGusta, auth } from './firebase.js'
 
 const mySetDeIds = new Set();
 
 $(async () => {
-    
+
     const querySnapShots = await getTasks();
     $("#spinner").hide();
     querySnapShots.forEach(doc => {
         let objeto = doc.data();
-        $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='sticker'>${objeto.contadorMeGusta}</div><p class='contenido-texto'>${objeto.texto}</p></div>`)
-            .prependTo("#pared")
-            .on('click', function (event) {
-                $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
-                $("#divMensaje").text($(event.currentTarget).children(".contenido-texto").get(0).innerHTML);
-                $("#divFecha").text(objeto.fecha);
-                $("#divId").text(doc.id);    
-            });
-        $(".contenido-texto").hide();
-        $("#divId").hide();
-        mySetDeIds.add(doc.id);
-        if (!auth){
-        } else{
-           // ocultarStickerMeGusta();
-            ocultaBotonMeGusta();
-        }   
+            $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='sticker'>${objeto.contadorMeGusta}</div><div class='sticker2'>${objeto.contadorNOMeGusta}</div><p class='contenido-texto'>${objeto.texto}</p></div>`)
+                .prependTo("#pared")
+                .on('click', function (event) {
+                    $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
+                    $("#divMensaje").text($(event.currentTarget).children(".contenido-texto").get(0).innerHTML);
+                    $("#divFecha").text(objeto.fecha);
+                    $("#divId").text(doc.id);
+                    $("#divIdNoMeGusta").text(doc.id);
+                });
+            $(".contenido-texto").hide();
+            $("#divId").hide();
+            $("#divIdNoMeGusta").hide();
+            mySetDeIds.add(doc.id);
+            if (!auth) {
+            } else {
+                // ocultarStickerMeGusta();
+                ocultaBotonMeGusta();
+                ocultaBotonNoMeGusta();
+            }
     });
     contarLadrillos();
 
@@ -40,6 +43,7 @@ $(function () {
         let day = d.getDate();
         let fecha = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + d.getFullYear();
         let contadorMeGusta = 0;
+        let contadorNOMeGusta = 0;
 
         $("#mensaje-nombre").empty();
         $("#mensaje-texto").empty();
@@ -66,55 +70,34 @@ $(function () {
 
             } else {
 
-                let id = await saveTask(nombre, texto, fecha, d, contadorMeGusta); //guardo todos los datos para el firebase
+                let id = await saveTask(nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta); //guardo todos los datos para el firebase
 
-                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='sticker'>${contadorMeGusta}</div></div>`)
+                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='sticker'>${contadorMeGusta}</div><div class='sticker2'>${contadorNOMeGusta}</div></div>`)
                     .prependTo("#pared")
                     .on('click', function (event) {
                         $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
                         $("#divMensaje").text($(event.currentTarget).children(".contenido-texto").get(0).innerHTML);
-                        $("#divFecha").text(fecha); 
-                        $("#divId").text(id);          
+                        $("#divFecha").text(fecha);
+                        $("#divId").text(id);
+                        $("#divIdNoMeGusta").text(id);
                     });
                 $(".contenido-texto").hide();
                 $("#nombre").val(""); //reseteo los input
                 $("#texto").val("");
                 mySetDeIds.add(id); // agrego id al set
-                if (!auth){
-                    ocultaBotonMeGusta()
-                } else{
-                   // ocultarStickerMeGusta()
-                   
-                } 
-                contarLadrillos();  
+                if (!auth) {
+                    ocultaBotonMeGusta();
+                    ocultaBotonNoMeGusta();
+                } else {
+                    // ocultarStickerMeGusta();
+
+                }
+                contarLadrillos();
             }
         }
     });
 
-    $("#boton-meGusta").on('click', async function (event) {
-        var id = $(event.currentTarget).children("#divId").get(0).innerHTML; // obtengo el id de cada ladrillo
-        //console.log(id);
-        //console.log($("#divId").val());
-        let contador = await saveMeGusta(id);
-        //console.log(`#${id}`);
-        //console.log($(`#${id}`).children(".sticker").get(0));
-        //$(`#${id}`).children(".sticker").get(0)
-        $(`#${id}`).children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
-
-    });
-
-    /*const singupForm = document.querySelector("#singup-form");
-    singupForm.addEventListener('submit', (e) =>{
-        e.preventDefault();
-
-        const email = document.querySelector("#singup-email").value;
-        const password = document.querySelector("#singup-password").value;
-
-        
-        console.log(email,password);
-    });*/
-
-    
+    //click boton me gusta
     $("#boton-meGusta").on('click', async function (event) {
         var id = $(event.currentTarget).children("#divId").get(0).innerHTML; // obtengo el id de cada ladrillo
         //console.log(id);
@@ -124,6 +107,15 @@ $(function () {
         //console.log($(`#${id}`).children(".sticker").get(0));
         //$(`#${id}`).children(".sticker").get(0)
         $(`#${id}`).children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
+
+    });
+
+
+    // Click boton NO me gusta
+    $("#boton-NoMeGusta").on('click', async function (event) {
+        var id = $(event.currentTarget).children("#divIdNoMeGusta").get(0).innerHTML; // obtengo el id de cada ladrillo
+        let contador = await saveNOMeGusta(id);
+        $(`#${id}`).children(".sticker2").get(0).innerHTML = contador;  // llego al div del sticker2 a traves del id del ladrillo
 
     });
 
@@ -139,15 +131,24 @@ function contarLadrillos() {
 }
 
 function ocultarStickerMeGusta() {
-    for (let actual of mySetDeIds){ // oculto los stickers de los me gusta
+    for (let actual of mySetDeIds) { // oculto los stickers de los me gusta
         $(`#${actual}`).children(".sticker").hide();
     }
 }
 
 function ocultaBotonMeGusta() {
-    for (let actual of mySetDeIds){ // oculto los stickers de los me gusta
-        if($(actual === $("#divId").val())){
+    for (let actual of mySetDeIds) { // oculto los stickers de los me gusta
+        if ($(actual === $("#divId").val())) {
             $("#boton-meGusta").hide();
+            //console.log("aca estoy")
+        };
+    }
+}
+
+function ocultaBotonNoMeGusta() {
+    for (let actual of mySetDeIds) { // oculto los stickers de los me gusta
+        if ($(actual === $("#divId").val())) {
+            $("#boton-NoMeGusta").hide();
             //console.log("aca estoy")
         };
     }

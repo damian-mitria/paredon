@@ -17,7 +17,7 @@ h1{
 }
 
 .copy{
-    margin-top: 1em;
+    margin-top: 3em;
 }
 
 .datos{
@@ -79,7 +79,7 @@ h1{
 
 .ladrillo{
     background: linear-gradient(135deg,#CB4154,#e06677)!important;
-    margin: .5em .2em;
+    margin: .55em .25em;
     display: block;
     flex-wrap: wrap;
     width: 6.25em;
@@ -121,8 +121,24 @@ h1{
     display:inline-flex;
     justify-content: center;
     float: right;
+    color: white;
 }
 
 .sticker:hover{
     background-color: rgb(0, 174, 255);
+}
+
+.sticker2{
+    background-color: red;
+    border-radius: 25%;
+    font-size: .8em;
+    width: 2.5em;
+    display:inline-flex;
+    justify-content: center;
+    float: left;
+    color: white;
+}
+
+.sticker2:hover{
+    background-color: rgb(253, 75, 75);
 }
