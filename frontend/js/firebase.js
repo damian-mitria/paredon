@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -27,7 +27,7 @@ const db = getFirestore();
 const database = getDatabase(app);
 
 export async function saveTask(nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta) {
-  
+
   let objeto = await addDoc(collection(db, 'tasks'), { nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta });
   return objeto.id;
 
@@ -48,6 +48,20 @@ export async function saveMeGusta(id) {
   return objeto.contadorMeGusta;
 }
 
+export async function saveSetMeGusta(likeUnicos) {
+
+  const setMeGusta = doc(db, "setMeGusta", "arrayMeGusta");
+
+  // Atomically add a new region to the "regions" array field.
+  await updateDoc(setMeGusta, {
+    arrayMeGusta: arrayUnion(likeUnicos)
+  });
+}
+
+export const getArrayMeGustaFirebase = () => getDocs((collection(db, 'setMeGusta')));
+
+
+//boton no me gusta
 export async function saveNOMeGusta(id) {
 
   const docRef = doc(db, "tasks", id);
@@ -58,9 +72,24 @@ export async function saveNOMeGusta(id) {
   return objeto.contadorNOMeGusta;
 }
 
+export async function saveSetNoMeGusta(likeUnicos) {
+
+  const setNoMeGusta = doc(db, "setNoMeGusta", "arrayNoMeGusta");
+
+  // Atomically add a new region to the "regions" array field.
+  await updateDoc(setNoMeGusta, {
+    arrayNoMeGusta: arrayUnion(likeUnicos)
+  });
+}
+
+export const getArrayNoMeGustaFirebase = () => getDocs((collection(db, 'setNoMeGusta')));
+
+
+
+
 // esto me sirve para todo lo que es logueo y registrarse
 const auth = getAuth();
-export {auth}; // lo exporto para saber si esta logueado en el main.js
+export { auth }; // lo exporto para saber si esta logueado en el main.js
 
 
 // Registrarse
@@ -75,7 +104,7 @@ singupForm.addEventListener('submit', (e) => {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-    
+
       set(ref(database, 'users/' + user.uid), {   //<----seteo al usuario en la base de datos
         email: email,
         password: password
@@ -210,9 +239,9 @@ setPersistence(auth, browserSessionPersistence)
     // if a user forgets to sign out.
     // ...
     // New sign-in will be persisted with session persistence.
-  console.log("estas aca")
+    console.log("estas aca")
     return signInWithEmailAndPassword(auth, email, password);
-  
+
   })
   .catch((error) => {
     // Handle Errors here.
