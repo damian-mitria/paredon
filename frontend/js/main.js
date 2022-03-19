@@ -147,7 +147,7 @@ $(function () {
 function contarLadrillos() {
     let contadorDeLadrillos = document.getElementsByClassName("contenido-nombre").length;
     $("#contadorDeLadrillos").empty();
-    $("#contadorDeLadrillos").append(`<p>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
+    $("#contadorDeLadrillos").append(`<p class='letraBlanca'>La cantidad de ladrillos por el momento es: ${contadorDeLadrillos}</p>`);
 }
 
 function ocultarStickerMeGusta() {
@@ -176,7 +176,5 @@ function ocultaBotonNoMeGusta() {
         };
     }
 }
-
-
 
 export default setDeIdsDeLosLadrillos; 
