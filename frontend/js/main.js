@@ -8,7 +8,8 @@ $(async () => {
     $("#spinner").hide();
     querySnapShots.forEach(doc => {
         let objeto = doc.data();
-        $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='sticker'>${objeto.contadorMeGusta}</div><div class='sticker2'>${objeto.contadorNOMeGusta}</div><p class='contenido-texto'>${objeto.texto}</p></div>`)
+        $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='stickerLike'><img src='img/like.png' class='likeYDislikeBlanco'><div class='sticker'>${objeto.contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' class='likeYDislikeBlanco'><div class='sticker2'>${objeto.contadorNOMeGusta}</div></div><p class='contenido-texto'>${objeto.texto}</p></div>`)
+        
             .prependTo("#pared")
             .on('click', function (event) {
                 $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
@@ -73,7 +74,7 @@ $(function () {
 
                 let id = await saveTask(nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta); //guardo todos los datos para el firebase
 
-                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='sticker'>${contadorMeGusta}</div><div class='sticker2'>${contadorNOMeGusta}</div></div>`)
+                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='stickerLike'><img src='img/like.png' class='likeYDislikeBlanco'><div class='sticker'>${contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' class='likeYDislikeBlanco'><div class='sticker2'>${contadorNOMeGusta}</div></div>`)
                     .prependTo("#pared")
                     .on('click', function (event) {
                         $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
@@ -93,7 +94,7 @@ $(function () {
                 } else {
                     // ocultarStickerMeGusta();
                 }
-                contarLadrillos();
+        
             }
         }
     });
@@ -114,7 +115,7 @@ $(function () {
                 alert("Solamente puede darle like una vez a cada ladrillo.")
             } else {
                 let contador = await saveMeGusta(id);
-                $(`#${id}`).children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
+                $(`#${id}`).children(".stickerLike").children(".sticker").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
                 saveSetMeGusta(likeUnicos);
             }
         });
@@ -137,7 +138,7 @@ $(function () {
                 alert("Solamente puede darle like una vez a cada ladrillo.")
             } else {
                 let contador = await saveNOMeGusta(id);
-                $(`#${id}`).children(".sticker2").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
+                $(`#${id}`).children(".stickerDislike").children(".sticker2").get(0).innerHTML = contador;  // llego al div del sticker a traves del id del ladrillo
                 saveSetNoMeGusta(likeUnicos);
             }
         });
