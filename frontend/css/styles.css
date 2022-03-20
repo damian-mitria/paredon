@@ -82,29 +82,32 @@ h1{
     display: block;
     margin-bottom: 0.5em;
     border-radius: 10px;
-    /*background: linear-gradient(135deg, #a945c7 20%, #ecf6f7 100%);*/
-    background: linear-gradient(#1a0321, #a945c7, #1a0321, #a945c7) center fixed;
-	animation: gradient 60s ease infinite;
-    background-size: 200% 1500%;
+    background: #8735a0;
+    /*background: linear-gradient(360deg, #8735a0 20%, #1a0321 90%);*/
+    /*background: linear-gradient(#1a0321, #a945c7, #1a0321, #a945c7) center fixed; -------este fondo se hace que ande lento en el cel
+	animation: gradient 25s ease infinite;
+    background-size: 150% 150%;*/
     border: none;
     color: white;
     border: none;
     color: white;
+    
 }
 
 .texto{
     display: block;
     margin-bottom: 0.5em;
     border-radius: 10px;
-    /*background: linear-gradient(135deg, #a945c7 20%, #ecf6f7 100%);*/
-    background: linear-gradient(#1a0321, #a945c7, #1a0321, #a945c7) center fixed;
-	animation: gradient 60s ease infinite;
-    background-size: 200% 1500%;
+    background: linear-gradient(180deg, #8735a0 20%, #1a0321 90%);
+    /*background: linear-gradient(#1a0321, #a945c7, #1a0321, #a945c7) center fixed; -------este fondo se hace que ande lento en el cel
+	animation: gradient 25s ease infinite;
+    background-size: 150% 150%;*/
     border: none;
     color: white;
 }
+/*
+@keyframes gradient { ------------>este fondo se hace que ande lento en el cel
 
-@keyframes gradient {
 	0% {
 		background-position: 50% 0%;
 	}
@@ -115,6 +118,7 @@ h1{
 		background-position: 50% 0%;
 	}
 }
+*/
 
 .boton{
     display: block;
@@ -220,7 +224,6 @@ h1{
 .pared{
     margin-top: 1em;
     background-color: #1a0321;
-    ;
     width: 100%;
     box-sizing: content-box;
     display: flex;

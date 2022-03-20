@@ -8,7 +8,7 @@ $(async () => {
     $("#spinner").hide();
     querySnapShots.forEach(doc => {
         let objeto = doc.data();
-        $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='stickerLike'><img src='img/like.png' class='likeYDislikeBlanco'><div class='sticker'>${objeto.contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' class='likeYDislikeBlanco'><div class='sticker2'>${objeto.contadorNOMeGusta}</div></div><p class='contenido-texto'>${objeto.texto}</p></div>`)
+        $(`<div id='${doc.id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${objeto.nombre}</p><p class='contenido-texto'>${objeto.texto}</p><div class='stickerLike'><img src='img/like.png' alt='like' class='likeYDislikeBlanco'><div class='sticker'>${objeto.contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' alt='dislike'  class='likeYDislikeBlanco'><div class='sticker2'>${objeto.contadorNOMeGusta}</div></div><p class='contenido-texto'>${objeto.texto}</p></div>`)
         
             .prependTo("#pared")
             .on('click', function (event) {
@@ -74,7 +74,7 @@ $(function () {
 
                 let id = await saveTask(nombre, texto, fecha, d, contadorMeGusta, contadorNOMeGusta); //guardo todos los datos para el firebase
 
-                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='stickerLike'><img src='img/like.png' class='likeYDislikeBlanco'><div class='sticker'>${contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' class='likeYDislikeBlanco'><div class='sticker2'>${contadorNOMeGusta}</div></div>`)
+                $(`<div id='${id}' class='ladrillo' data-bs-toggle='modal' data-bs-target='#myModal'><p class='contenido-nombre'>${nombre}</p><p class='contenido-texto'>${texto}</p><div class='stickerLike'><img src='img/like.png' alt='like' class='likeYDislikeBlanco'><div class='sticker'>${contadorMeGusta}</div></div><div class='stickerDislike'><img src='img/dislike.png' alt='dislike'  class='likeYDislikeBlanco'><div class='sticker2'>${contadorNOMeGusta}</div></div>`)
                     .prependTo("#pared")
                     .on('click', function (event) {
                         $("#modalTitle").text($(event.currentTarget).children(".contenido-nombre").get(0).innerHTML);
