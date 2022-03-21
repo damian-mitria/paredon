@@ -239,7 +239,7 @@ setPersistence(auth, browserSessionPersistence)
     // if a user forgets to sign out.
     // ...
     // New sign-in will be persisted with session persistence.
-    console.log("estas aca")
+    //console.log("estas aca")
     return signInWithEmailAndPassword(auth, email, password);
 
   })
@@ -247,6 +247,5 @@ setPersistence(auth, browserSessionPersistence)
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorMessage)
   });
 
