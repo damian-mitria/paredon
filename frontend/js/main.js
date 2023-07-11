@@ -179,6 +179,7 @@ function ocultaBotonNoMeGusta() {
 }
 
 // Efecto matrix
+/*
 const canvas = document.getElementById('lienzo');
 const ctx = canvas.getContext('2d');
 
@@ -198,7 +199,7 @@ function matrix() {
     ctx.fillRect(0, 0, w, h);
 
     ctx.fillStyle = '#0f0';
-    ctx.font = '15pt monospace';
+    ctx.font = '12pt monospace';
 
     posicion_y.forEach((y , ind) => {
         const text = String.fromCharCode(Math.random()*128);
@@ -213,7 +214,7 @@ function matrix() {
 };
 
 setInterval(matrix, 50);
-
+*/
 
 
 export default setDeIdsDeLosLadrillos; 

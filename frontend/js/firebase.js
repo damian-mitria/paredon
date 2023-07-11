@@ -6,16 +6,19 @@ import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc,
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+//traigo datos de entorno
+require('dotenv').config();
+
 import mySetDeIds from "./main.js"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBhw5ifbn4wnklj2zmzevM1eM_lvHLbfck",
+  apiKey: process.env.apiKey,
   authDomain: "tuparedon.firebaseapp.com",
   projectId: "tuparedon",
   storageBucket: "tuparedon.appspot.com",
-  messagingSenderId: "151232886278",
-  appId: "1:151232886278:web:f9326c5d80f91289767587"
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId
 };
 
 // Initialize Firebase
